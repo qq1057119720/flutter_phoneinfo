@@ -5,4 +5,8 @@ class FlutterPhoneinfo {
   Future<String?> getPlatformVersion() {
     return FlutterPhoneinfoPlatform.instance.getPlatformVersion();
   }
+
+  Future<List> getInstalledApps() {
+    return FlutterPhoneinfoPlatform.instance.getInstalledApps();
+  }
 }
