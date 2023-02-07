@@ -76,6 +76,7 @@ public class FlutterPhoneinfoPlugin implements FlutterPlugin, MethodCallHandler 
     map.put("version_name", info.versionName);
     map.put("firstInstallTime",info.firstInstallTime);
     map.put("lastUpdateTime",info.lastUpdateTime);
+    map.put("flags",info.applicationInfo.flags);
     map.put("app_type",isSystemApplication(activity,info.packageName));
 
     return map;
