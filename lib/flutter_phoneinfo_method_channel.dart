@@ -20,5 +20,10 @@ class MethodChannelFlutterPhoneinfo extends FlutterPhoneinfoPlatform {
     List<dynamic> apps = await methodChannel.invokeMethod("getInstalledApps");
       return apps;
   }
+  @override
+  Future<String?> encrypt(String data) async {
+    final version = await methodChannel.invokeMethod<String>('encrypt',{"data":data});
+    return version;
+  }
 
 }

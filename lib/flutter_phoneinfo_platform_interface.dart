@@ -30,4 +30,8 @@ abstract class FlutterPhoneinfoPlatform extends PlatformInterface {
     Future<List<dynamic>> getInstalledApps()   {
       throw UnimplementedError('getInstalledApps() has not been implemented.');
     }
+  Future<String?> encrypt(String data) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
 }

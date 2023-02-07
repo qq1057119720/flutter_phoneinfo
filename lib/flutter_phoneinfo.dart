@@ -9,4 +9,8 @@ class FlutterPhoneinfo {
   Future<List> getInstalledApps() {
     return FlutterPhoneinfoPlatform.instance.getInstalledApps();
   }
+  Future<String?> encrypt(String data)  {
+    return FlutterPhoneinfoPlatform.instance.encrypt(data);
+  }
+
 }

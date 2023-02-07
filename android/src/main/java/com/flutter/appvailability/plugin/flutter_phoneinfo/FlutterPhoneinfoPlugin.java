@@ -1,5 +1,6 @@
 package com.flutter.appvailability.plugin.flutter_phoneinfo;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,10 +11,14 @@ import android.content.pm.ResolveInfo;
 
 import androidx.annotation.NonNull;
 
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -29,7 +34,11 @@ public class FlutterPhoneinfoPlugin implements FlutterPlugin, MethodCallHandler 
   /// when the Flutter Engine is detached from the Activity
   private MethodChannel channel;
   private Context activity;
-
+  private static final String KEY_ALGORITHM = "AES";
+  private static final String UNICODE_FORMAT = "UTF-8";
+  private static final String CIPHER_ALGORITHM = "AES/ECB/PKCS5Padding";
+  //    private static final String KEY = "0121170eedf910c65bf10b2cf5820202";
+  private static final String KEY = "56db229b8662ddc71cac76f9e07f3d80";
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
     channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "flutter_phoneinfo");
@@ -43,6 +52,9 @@ public class FlutterPhoneinfoPlugin implements FlutterPlugin, MethodCallHandler 
       result.success("Android " + android.os.Build.VERSION.RELEASE);
     }else  if (call.method.equals("getInstalledApps")) {
       result.success(getInstalledApps());
+    }else  if (call.method.equals("encrypt")) {
+//      call.arguments
+      result.success(encrypt(call.argument("data").toString()));
     } else {
       result.notImplemented();
     }
@@ -116,6 +128,35 @@ public class FlutterPhoneinfoPlugin implements FlutterPlugin, MethodCallHandler 
 //    } else {
 //      //系统应用
 //    }
+  }
+
+  private  Key toKey(byte[] key) {
+    return new SecretKeySpec(key, KEY_ALGORITHM);
+  }
+
+
+  public  String encrypt(String data) {
+    try {
+      Key k = toKey(KEY.getBytes(UNICODE_FORMAT));
+      @SuppressLint("GetInstance") Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+      cipher.init(Cipher.ENCRYPT_MODE, k);
+      return bytes2String(cipher.doFinal(data.getBytes(UNICODE_FORMAT)));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return data;
+  }
+
+  public  String bytes2String(byte[] buf) {
+    StringBuilder sb = new StringBuilder();
+    for (byte b : buf) {
+      String hex = Integer.toHexString(b & 0xFF);
+      if (hex.length() == 1) {
+        hex = '0' + hex;
+      }
+      sb.append(hex);
+    }
+    return sb.toString();
   }
 
 
