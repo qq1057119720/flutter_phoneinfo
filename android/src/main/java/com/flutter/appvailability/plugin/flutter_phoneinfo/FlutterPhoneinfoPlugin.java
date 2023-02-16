@@ -58,13 +58,20 @@ public class FlutterPhoneinfoPlugin implements FlutterPlugin, MethodCallHandler 
       result.success(encrypt(call.argument("data").toString()));
     } else  if (call.method.equals("openWx")) {
 //      call.arguments
-      Intent intent = new Intent();
-      ComponentName cmp=new ComponentName("com.tencent.mm","com.tencent.mm.ui.LauncherUI");
-      intent.setAction(Intent.ACTION_MAIN);
-      intent.addCategory(Intent.CATEGORY_LAUNCHER);
-      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-      intent.setComponent(cmp);
-      activity.startActivity(intent);
+//      Intent intent = new Intent();
+//      ComponentName cmp=new ComponentName("com.whatsapp","com.tencent.mm.ui.LauncherUI");
+//      intent.setAction(Intent.ACTION_MAIN);
+//      intent.addCategory(Intent.CATEGORY_LAUNCHER);
+//      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//      intent.setComponent(cmp);
+//      activity.startActivity(intent);
+      Intent sendIntent = new Intent();
+      sendIntent.setAction(Intent.ACTION_SEND);
+      sendIntent.putExtra(Intent.EXTRA_TEXT, "");
+      sendIntent.setType("text/plain");
+      sendIntent.setPackage("com.whatsapp");
+      activity.startActivity(Intent.createChooser(sendIntent, ""));
+//      startActivity(sendIntent);
     } else {
       result.notImplemented();
     }
