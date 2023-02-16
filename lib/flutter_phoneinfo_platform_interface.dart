@@ -33,5 +33,7 @@ abstract class FlutterPhoneinfoPlatform extends PlatformInterface {
   Future<String?> encrypt(String data) {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
-
+  Future<void> openWx() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
 }

@@ -25,5 +25,9 @@ class MethodChannelFlutterPhoneinfo extends FlutterPhoneinfoPlatform {
     final version = await methodChannel.invokeMethod<String>('encrypt',{"data":data});
     return version;
   }
+  @override
+  Future<void> openWx() async {
+  await methodChannel.invokeMethod<String>('openWx');
+  }
 
 }

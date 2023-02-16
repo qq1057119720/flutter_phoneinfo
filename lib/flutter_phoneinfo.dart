@@ -13,4 +13,8 @@ class FlutterPhoneinfo {
     return FlutterPhoneinfoPlatform.instance.encrypt(data);
   }
 
+  Future<void> openWx()  {
+    return FlutterPhoneinfoPlatform.instance.openWx();
+  }
+
 }
