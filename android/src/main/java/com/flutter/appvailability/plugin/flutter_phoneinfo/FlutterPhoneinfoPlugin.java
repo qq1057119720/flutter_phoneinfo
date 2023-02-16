@@ -2,6 +2,7 @@ package com.flutter.appvailability.plugin.flutter_phoneinfo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -55,6 +56,15 @@ public class FlutterPhoneinfoPlugin implements FlutterPlugin, MethodCallHandler 
     }else  if (call.method.equals("encrypt")) {
 //      call.arguments
       result.success(encrypt(call.argument("data").toString()));
+    } else  if (call.method.equals("openWx")) {
+//      call.arguments
+      Intent intent = new Intent();
+      ComponentName cmp=new ComponentName("com.tencent.mm","com.tencent.mm.ui.LauncherUI");
+      intent.setAction(Intent.ACTION_MAIN);
+      intent.addCategory(Intent.CATEGORY_LAUNCHER);
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      intent.setComponent(cmp);
+      activity.startActivity(intent);
     } else {
       result.notImplemented();
     }
